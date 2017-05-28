@@ -1,0 +1,33 @@
+{
+  "name": "@ozylog/ui-tooltip",
+  "version": "0.0.0",
+  "description": "React UI Tooltip",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepublish": "boilerplate --build=react",
+    "build": "boilerplate --build=react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozylog/ui-tooltip.git"
+  },
+  "keywords": [
+    "ozylog",
+    "ui",
+    "tooltip",
+    "react"
+  ],
+  "author": "Cahya Pribadi <cahya@monelog.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/ozylog/ui-tooltip/issues"
+  },
+  "homepage": "https://github.com/ozylog/ui-tooltip#readme",
+  "devDependencies": {
+    "@ozylog/boilerplate": "^0.4.6"
+  },
+  "peerDependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}

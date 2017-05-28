@@ -1,0 +1,61 @@
+.UITooltip {
+
+  &-box {
+    background: hexa(#333333, 0.7);
+    border-radius: 3px;
+    color: #f5f5f5;
+    font-size: 0.9em;
+    opacity: 0;
+    padding: 2px 8px;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+
+    &::before {
+      border-bottom: 6px solid hexa(#333333, 0.7);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: -6px;
+    }
+  }
+
+  &-show {
+    opacity: 1;
+  }
+
+  &-center {
+
+    &::before {
+      left: calc(50% - 6px);
+    }
+
+    &::after {
+      left: calc(50% - 5px);
+    }
+  }
+
+  &-left {
+
+    &::before {
+      left: 9px;
+    }
+
+    &::after {
+      left: 10px;
+    }
+  }
+
+  &-right {
+
+    &::before {
+      right: 9px;
+    }
+
+    &::after {
+      right: 10px;
+    }
+  }
+}

@@ -67,19 +67,23 @@ export default class Box extends Component {
     if (className) classes.push(className);
     if (status) classes.push('UITooltip-show');
 
-    style.top = parentHeight + 5;
-    if (status && clickable) style.pointerEvents = 'auto';
+    const modifiedStyle = {
+      top: parentHeight + 7
+    };
 
+    if (status && clickable) modifiedStyle.pointerEvents = 'auto';
     if (align === 'left') {
-      style.left = 0;
+      modifiedStyle.left = 0;
     } else if (align === 'center') {
-      style.left = -1 * width / 2 + parentWidth / 2;
+      modifiedStyle.left = -1 * width / 2 + parentWidth / 2;
     } else if (align === 'right') {
-      style.right = 0;
+      modifiedStyle.right = 0;
     }
 
+    Object.assign(modifiedStyle, style);
+
     return (
-      <span className={classes.join(' ')} ref='tooltip' style={style}>
+      <span className={classes.join(' ')} ref='tooltip' style={modifiedStyle}>
         {children}
       </span>
     );

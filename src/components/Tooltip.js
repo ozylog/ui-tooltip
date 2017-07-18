@@ -30,7 +30,7 @@ export default class Tooltip extends Component {
     const childProps = Object.assign({}, this.state);
 
     return Children.map(children, (child) => {
-      return child.type && child.type.name === 'Box' ? cloneElement(child, childProps) : child;
+      return child && child.type && child.type.name === 'Box' ? cloneElement(child, childProps) : child;
     });
   }
 

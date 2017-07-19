@@ -15,12 +15,13 @@ export default class Box extends Component {
       status: false,
       clickable: false,
       trigger: 'hover',
+      adjustHeight: 0,
       style: {}
     };
   }
 
   componentWillMount() {
-    const {align, clickable, style, click} = this.props;
+    const {align, clickable, style, click, adjustHeight} = this.props;
     const newState = {};
 
     if (align) newState.align = align;
@@ -29,6 +30,7 @@ export default class Box extends Component {
       newState.trigger = 'click';
       if (clickable) newState.clickable = clickable;
     }
+    if (adjustHeight) newState.adjustHeight = adjustHeight;
     if (Object.keys(newState).length) this.setState(newState);
   }
 
@@ -61,14 +63,14 @@ export default class Box extends Component {
 
   render() {
     const {className, children} = this.props;
-    const {width, parentWidth, parentHeight, align, status, clickable, style = {}} = this.state;
+    const {width, parentWidth, parentHeight, align, status, clickable, adjustHeight, style = {}} = this.state;
     const classes = ['UITooltip-box', `UITooltip-${align}`];
 
     if (className) classes.push(className);
     if (status) classes.push('UITooltip-show');
 
     const modifiedStyle = {
-      top: parentHeight + 7
+      top: parentHeight + adjustHeight
     };
 
     if (status && clickable) modifiedStyle.pointerEvents = 'auto';

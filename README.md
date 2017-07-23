@@ -14,7 +14,7 @@ npm install @ozylog/ui-tooltip --save
 ```
 
 ```
-<Box trigger=['click'(default) || 'hover'] align=['left'(default) || 'center' || 'right'] />
+<Box [click] [hover](default) align=['left' || 'center' (default) || 'right'] />
 ```
 
 ## Usage Example
@@ -30,7 +30,8 @@ export default class TestContainer extends Component {
       <div className='Test'>
         <Tooltip>
           Hello
-          <Box>World</Box>
+          <Box>World1</Box>
+          <Box click>World2</Box>
         </Tooltip>
       </div>
     );

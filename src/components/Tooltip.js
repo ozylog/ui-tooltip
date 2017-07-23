@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, Children, cloneElement} from 'react';
-import './../styles/tooltip.css';
+import {StyleSheet, css} from 'aphrodite';
 
 export default class Tooltip extends Component {
   constructor(props) {
@@ -14,11 +14,18 @@ export default class Tooltip extends Component {
   }
 
   onClick = () => {
-    this.setState({isClicked: !this.state.isClicked});
+    const isClicked = !this.state.isClicked;
+
+    this.setState({
+      isClicked: !this.state.isClicked,
+      isHovered: isClicked ? false : true
+    });
   }
 
   onMouseOver = () => {
-    this.setState({isHovered: true});
+    if (!this.state.isClicked) {
+      this.setState({isHovered: true});
+    }
   }
 
   onMouseOut = () => {
@@ -36,15 +43,18 @@ export default class Tooltip extends Component {
 
   render() {
     const {onClick, onMouseOut, onMouseOver} = this;
-    const {className} = this.props;
-    const classes = ['UITooltip'];
-
-    if (className) classes.push(className);
 
     return (
-      <span className={classes.join(' ')} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
+      <span style={css(styles.tooltip)} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
         {this.getChildren()}
       </span>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  tooltip: {
+    display: 'inline-block',
+    position: 'relative'
+  }
+});

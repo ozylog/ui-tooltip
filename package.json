@@ -24,10 +24,11 @@
   },
   "homepage": "https://github.com/ozylog/ui-tooltip#readme",
   "devDependencies": {
-    "@ozylog/boilerplate": "^0.4.6"
+    "@ozylog/boilerplate": "^0.6.0"
   },
   "peerDependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "aphrodite": "^1.2.3"
   }
 }

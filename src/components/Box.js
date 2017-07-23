@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import './../styles/box.css';
+import {StyleSheet, css} from 'aphrodite';
 
 export default class Box extends Component {
   constructor(props) {
@@ -11,36 +11,21 @@ export default class Box extends Component {
       width: 0,
       parentWidth: 0,
       parentHeight: 0,
-      align: 'center',
-      status: false,
-      clickable: false,
-      trigger: 'hover',
-      adjustHeight: 0,
-      style: {}
+      status: false
     };
   }
 
-  componentWillMount() {
-    const {align, clickable, style, click, adjustHeight} = this.props;
-    const newState = {};
-
-    if (align) newState.align = align;
-    if (style) newState.style = style;
-    if (click) {
-      newState.trigger = 'click';
-      if (clickable) newState.clickable = clickable;
-    }
-    if (adjustHeight) newState.adjustHeight = adjustHeight;
-    if (Object.keys(newState).length) this.setState(newState);
-  }
-
   componentDidUpdate() {
-    const {trigger, status} = this.state;
-    const {isHovered, isClicked} = this.props;
-    const hoverStatusChange = trigger === 'hover' && isHovered !== status;
-    const clickStatusChange = trigger === 'click' && isClicked !== status;
+    let change = false;
+    const {status} = this.state;
+    const {isHovered, isClicked, click, hover} = this.props;
+    const isHover = hover || (!click && !hover);
+    const isClick = click;
 
-    if (hoverStatusChange || clickStatusChange) this.changeStatus();
+    if (isClick && isClicked !== status) change = !change;
+    if (isHover && isHovered !== status) change = !change;
+
+    if (change) this.changeStatus();
   }
 
   changeStatus() {
@@ -62,32 +47,65 @@ export default class Box extends Component {
   }
 
   render() {
-    const {className, children} = this.props;
-    const {width, parentWidth, parentHeight, align, status, clickable, adjustHeight, style = {}} = this.state;
-    const classes = ['UITooltip-box', `UITooltip-${align}`];
-
-    if (className) classes.push(className);
-    if (status) classes.push('UITooltip-show');
-
-    const modifiedStyle = {
-      top: parentHeight + adjustHeight
+    const {children, align, clickable, style, adjustHeight} = this.props;
+    const {width, parentWidth, parentHeight, status} = this.state;
+    const additionalStyle = {
+      top: parentHeight + (adjustHeight || 0),
+      opacity: status ? 1 : 0
     };
 
-    if (status && clickable) modifiedStyle.pointerEvents = 'auto';
+    if (status && clickable) additionalStyle.pointerEvents = 'auto';
     if (align === 'left') {
-      modifiedStyle.left = 0;
-    } else if (align === 'center') {
-      modifiedStyle.left = -1 * width / 2 + parentWidth / 2;
+      Object.assign(additionalStyle, {
+        left: 0,
+        ':before': {left: '9px'},
+        ':after': {left: '10px'}
+      });
     } else if (align === 'right') {
-      modifiedStyle.right = 0;
+      Object.assign(additionalStyle, {
+        right: 0,
+        ':before': {right: '9px'},
+        ':after': {right: '10px'}
+      });
+    } else { // default center
+      Object.assign(additionalStyle, {
+        left: -1 * width / 2 + parentWidth / 2,
+        ':before': {left: 'calc(50% - 6px)'},
+        ':after': {left: 'calc(50% - 6px)'}
+      });
     }
 
-    Object.assign(modifiedStyle, style);
+    if (style) Object.assign(additionalStyle, style);
+
+    const boxStyle = StyleSheet.create(additionalStyle);
 
     return (
-      <span className={classes.join(' ')} ref='tooltip' style={modifiedStyle}>
+      <span ref='tooltip' style={css(styles.box, boxStyle)}>
         {children}
       </span>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  box: {
+    background: 'rgba(51, 51, 51, 0.7)',
+    borderRadius: 3,
+    color: '#f5f5f5',
+    fontSize: '0.9em',
+    opacity: 0,
+    padding: '2px 8px',
+    pointerEvents: 'none',
+    position: 'absolute',
+    zIndex: 1,
+    ':before': {
+      borderBottom: '6px solid rgba(51, 51, 51, 0.7)',
+      borderLeft: '6px solid transparent',
+      borderRight: '6px solid transparent',
+      content: '',
+      display: 'inline-block',
+      position: 'absolute',
+      top: '-6px'
+    }
+  }
+});

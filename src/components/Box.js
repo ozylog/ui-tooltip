@@ -77,10 +77,10 @@ export default class Box extends Component {
 
     if (style) Object.assign(additionalStyle, style);
 
-    const boxStyle = StyleSheet.create(additionalStyle);
+    const boxStyle = StyleSheet.create({box: additionalStyle});
 
     return (
-      <span ref='tooltip' className={css(styles.box, boxStyle)}>
+      <span ref='tooltip' className={css(styles.box, boxStyle.box)}>
         {children}
       </span>
     );

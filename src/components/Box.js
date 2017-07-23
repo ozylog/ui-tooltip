@@ -80,7 +80,7 @@ export default class Box extends Component {
     const boxStyle = StyleSheet.create(additionalStyle);
 
     return (
-      <span ref='tooltip' style={css(styles.box, boxStyle)}>
+      <span ref='tooltip' className={css(styles.box, boxStyle)}>
         {children}
       </span>
     );

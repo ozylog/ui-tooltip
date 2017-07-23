@@ -45,7 +45,7 @@ export default class Tooltip extends Component {
     const {onClick, onMouseOut, onMouseOver} = this;
 
     return (
-      <span style={css(styles.tooltip)} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
+      <span styles={css(styles.tooltip)} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
         {this.getChildren()}
       </span>
     );

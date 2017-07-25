@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
       borderBottom: '6px solid rgba(51, 51, 51, 0.7)',
       borderLeft: '6px solid transparent',
       borderRight: '6px solid transparent',
-      content: '',
+      content: '""',
       display: 'inline-block',
       position: 'absolute',
       top: '-6px'

@@ -29,6 +29,6 @@
   "peerDependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "aphrodite": "^1.2.3"
+    "react-jss": "^7.0.2"
   }
 }

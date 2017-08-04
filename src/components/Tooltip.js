@@ -1,9 +1,16 @@
 'use strict';
 
 import React, {Component, Children, cloneElement} from 'react';
-import {StyleSheet, css} from 'aphrodite';
+import injectSheet from 'react-jss';
 
-export default class Tooltip extends Component {
+const styles = {
+  tooltip: {
+    display: 'inline-block',
+    position: 'relative'
+  }
+};
+
+class Tooltip extends Component {
   constructor(props) {
     super(props);
 
@@ -42,19 +49,15 @@ export default class Tooltip extends Component {
   }
 
   render() {
+    const {classes} = this.props;
     const {onClick, onMouseOut, onMouseOver} = this;
 
     return (
-      <span className={css(styles.tooltip)} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
+      <span className={classes.tooltip} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
         {this.getChildren()}
       </span>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  tooltip: {
-    display: 'inline-block',
-    position: 'relative'
-  }
-});
+export default injectSheet(styles)(Tooltip);

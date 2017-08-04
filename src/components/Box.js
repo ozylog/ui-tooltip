@@ -1,9 +1,44 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, css} from 'aphrodite';
+import injectSheet from 'react-jss';
 
-export default class Box extends Component {
+const styles = {
+  box: {
+    background: 'rgba(51, 51, 51, 0.7)',
+    borderRadius: 3,
+    color: '#f5f5f5',
+    fontSize: '0.9em',
+    opacity: 0,
+    padding: '2px 8px',
+    pointerEvents: 'none',
+    position: 'absolute',
+    zIndex: 1,
+    ':before': {
+      borderBottom: '6px solid rgba(51, 51, 51, 0.7)',
+      borderLeft: '6px solid transparent',
+      borderRight: '6px solid transparent',
+      content: '""',
+      display: 'inline-block',
+      position: 'absolute',
+      top: '-6px'
+    }
+  },
+  boxLeft: {
+    ':before': {left: '9px'},
+    ':after': {left: '10px'}
+  },
+  boxCenter: {
+    ':before': {left: 'calc(50% - 6px)'},
+    ':after': {left: 'calc(50% - 6px)'}
+  },
+  boxRight: {
+    ':before': {right: '9px'},
+    ':after': {right: '10px'}
+  }
+};
+
+class Box extends Component {
   constructor(props) {
     super(props);
 
@@ -47,65 +82,35 @@ export default class Box extends Component {
   }
 
   render() {
-    const {children, align, clickable, style, adjustHeight} = this.props;
+    const {children, align, clickable, style, adjustHeight, classes, className} = this.props;
     const {width, parentWidth, parentHeight, status} = this.state;
-    const additionalStyle = {
+    const inlineStyles = {
       top: parentHeight + (adjustHeight || 0),
       opacity: status ? 1 : 0
     };
+    const classNames = [classes.box];
+    if (className) classNames.push(className);
 
-    if (status && clickable) additionalStyle.pointerEvents = 'auto';
+    if (status && clickable) inlineStyles.pointerEvents = 'auto';
     if (align === 'left') {
-      Object.assign(additionalStyle, {
-        left: 0,
-        ':before': {left: '9px'},
-        ':after': {left: '10px'}
-      });
+      inlineStyles.left = 0;
+      classNames.push(classes.boxLeft);
     } else if (align === 'right') {
-      Object.assign(additionalStyle, {
-        right: 0,
-        ':before': {right: '9px'},
-        ':after': {right: '10px'}
-      });
+      inlineStyles.right = 0;
+      classNames.push(classes.boxRight);
     } else { // default center
-      Object.assign(additionalStyle, {
-        left: -1 * width / 2 + parentWidth / 2,
-        ':before': {left: 'calc(50% - 6px)'},
-        ':after': {left: 'calc(50% - 6px)'}
-      });
+      inlineStyles.left = -1 * width / 2 + parentWidth / 2;
+      classNames.push(classes.boxCenter);
     }
 
-    if (style) Object.assign(additionalStyle, style);
-
-    const boxStyle = StyleSheet.create({box: additionalStyle});
+    if (style) Object.assign(inlineStyles, style);
 
     return (
-      <span ref='tooltip' className={css(styles.box, boxStyle.box)}>
+      <span ref='tooltip' className={classNames.join(' ')} styles={inlineStyles}>
         {children}
       </span>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  box: {
-    background: 'rgba(51, 51, 51, 0.7)',
-    borderRadius: 3,
-    color: '#f5f5f5',
-    fontSize: '0.9em',
-    opacity: 0,
-    padding: '2px 8px',
-    pointerEvents: 'none',
-    position: 'absolute',
-    zIndex: 1,
-    ':before': {
-      borderBottom: '6px solid rgba(51, 51, 51, 0.7)',
-      borderLeft: '6px solid transparent',
-      borderRight: '6px solid transparent',
-      content: '""',
-      display: 'inline-block',
-      position: 'absolute',
-      top: '-6px'
-    }
-  }
-});
+export default injectSheet(styles)(Box);

@@ -106,7 +106,7 @@ class Box extends Component {
     if (style) Object.assign(inlineStyles, style);
 
     return (
-      <span ref='tooltip' className={classNames.join(' ')} styles={inlineStyles}>
+      <span ref='tooltip' className={classNames.join(' ')} style={inlineStyles}>
         {children}
       </span>
     );

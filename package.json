@@ -1,6 +1,6 @@
 {
   "name": "@ozylog/ui-tooltip",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "React UI Tooltip",
   "main": "./dist/index.js",
   "scripts": {

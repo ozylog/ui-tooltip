@@ -60,6 +60,10 @@ class Tooltip extends Component {
     document.removeEventListener('click', this.handleAllClick, true);
   }
 
+  getContainer = (ref) => {
+    this.container = ref;
+  }
+
   handleAllClick = (e) => {
     if (this.state.isClicked) {
       const el = this.container;
@@ -98,10 +102,10 @@ class Tooltip extends Component {
 
   render() {
     const {classes} = this.props;
-    const {onClick, onMouseOut, onMouseOver} = this;
+    const {onClick, onMouseOut, onMouseOver, getContainer} = this;
 
     return (
-      <span className={classes.tooltip} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
+      <span className={classes.tooltip} ref={getContainer} onClick={onClick} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
         {this.getChildren()}
       </span>
     );

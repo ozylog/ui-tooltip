@@ -52,6 +52,22 @@ class Tooltip extends Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('click', this.handleAllClick, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleAllClick, true);
+  }
+
+  handleAllClick = (e) => {
+    if (this.state.isClicked) {
+      const el = this.container;
+
+      if (!el.contains(e.target)) this.setState({isClicked: false});
+    }
+  }
+
   onClick = () => {
     const isClicked = !this.state.isClicked;
 
